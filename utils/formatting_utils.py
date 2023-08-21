@@ -1,4 +1,3 @@
-
 import os
 import re
 import cv2
@@ -187,13 +186,13 @@ def make_pagewise_list(all_final_names,all_final_appends):
 
     return all_files_pagewise
 
-def break_pdf_to_files(path_in_pdf,path_write_pdf,all_files_pagewise,compress_pdf=False):
+
+def break_pdf_to_files(path_in_pdf,path_write_pdf,all_files_pagewise,compress_pdf=False,pg_num=True):
     inputpdf = PdfReader(open(path_in_pdf, "rb"))
     for i in range(0,len(all_files_pagewise)):
         one_pdf = all_files_pagewise[i]
         pdf_writer = PdfWriter()
         pdf_name,_ = os.path.splitext(one_pdf[0][0].split('/')[-1])
-        pdf_name = os.path.join(path_write_pdf,pdf_name+'.pdf')
 
         one_page = inputpdf.pages[one_pdf[0][1]]
 
@@ -209,17 +208,19 @@ def break_pdf_to_files(path_in_pdf,path_write_pdf,all_files_pagewise,compress_pd
 
             pdf_writer.add_page(one_page)
 
+        if pg_num==False:
+            page_num =  pdf_name.split('_')[0]
+            pdf_name = pdf_name.split(page_num+'_')[1]
+
+        pdf_name = os.path.join(path_write_pdf,pdf_name+'.pdf')
         with open(pdf_name, "wb") as outputStream:
             pdf_writer.write(outputStream)
 
-def break_pdf_to_images(all_pages,path_write_images,all_files_pagewise,jpeg_quality=95):
+def break_pdf_to_images(all_pages,path_write_images,all_files_pagewise,jpeg_quality=95,pg_num=True):
 
     for i in range(0,len(all_files_pagewise)):
         one_pdf = all_files_pagewise[i]
-
         pdf_name,_ = os.path.splitext(one_pdf[0][0].split('/')[-1])
-        pdf_name = os.path.join(path_write_images,pdf_name+'.jpg')
-
         one_page = np.array(all_pages[one_pdf[0][1]])
 
         final_img = np.array(one_page)
@@ -228,5 +229,9 @@ def break_pdf_to_images(all_pages,path_write_images,all_files_pagewise,jpeg_qual
             one_page = all_pages[one_pdf[j]]
             final_img = np.concatenate((final_img,one_page),axis=1)
 
+        if pg_num==False:
+            page_num =  pdf_name.split('_')[0]
+            pdf_name = pdf_name.split(page_num+'_')[1]
 
+        pdf_name = os.path.join(path_write_images,pdf_name+'.jpg')
         cv2.imwrite(pdf_name,final_img,[cv2.IMWRITE_JPEG_QUALITY, jpeg_quality])
