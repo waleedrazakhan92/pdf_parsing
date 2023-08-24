@@ -7,7 +7,7 @@ def read_bcode_from_img(img):
 
     return None
 
-def get_name_from_bcode(bcode_417):
+def get_name_from_bcode(bcode_417,limit_name_idx=None):
     name_keys = ['g','h','i']
     bcode_text = bcode_417.text.split('name')[-1].split(',')
 
@@ -22,5 +22,13 @@ def get_name_from_bcode(bcode_417):
             bcode_name.append(bcode_text[i+1][1:])
         elif bcode_text[i][0]==name_keys[0]:
             bcode_name.append(bcode_text[i][1:])
+
+    
+    ## limiting name to just 'g' and 'h' 
+    if bcode_name!=[] and limit_name_idx!=None:
+        bcode_name = bcode_name[:limit_name_idx]
+
+    if bcode_name!=[]:
+        bcode_name = str(' '.join(bcode_name))
 
     return bcode_name

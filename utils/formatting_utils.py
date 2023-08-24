@@ -4,21 +4,31 @@ import cv2
 from utils.common_functions import delete_characters
 import numpy as np
 from PyPDF2 import PdfWriter, PdfReader
+from utils.common_functions import delete_characters,find_element_index
 
 def format_name(in_name):
 
     if in_name==None:
         return in_name
 
-    in_name = delete_characters(in_name,[',','.'])
+    in_name_clean = delete_characters(in_name,[',','.'])
+    in_name_clean = in_name_clean.split(' ')
 
     in_name = in_name.split(' ')
-    if len(in_name)>1:
-        f_name = in_name[1]+', '+in_name[0]
+    indices = find_element_index(in_name,',')
+
+    if indices==0 and len(in_name_clean)>1:
+        f_name = in_name_clean[0]+', '+in_name_clean[1]
+    elif len(in_name_clean)>1 and len(in_name_clean)!=4 and indices==[]:
+        f_name = in_name_clean[-1]+', '+in_name_clean[0]
+    elif len(in_name_clean)>1 and len(in_name_clean)==4 and indices==[]:
+        f_name = in_name_clean[-2]+' '+in_name_clean[-1]+', '+in_name_clean[0]
     else:
-        f_name = in_name[0]
+        f_name = in_name_clean[0]
+
 
     return f_name
+
 
 def correct_final_doc_type(doc_type):
     ''' if there is "Receipt_2" then make it "Receipt"   if its Decision_Notice then leave it as it is'''

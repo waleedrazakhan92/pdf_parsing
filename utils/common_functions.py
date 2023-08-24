@@ -7,6 +7,14 @@ import math
 from pytesseract import Output
 from utils.load_and_preprocess_utils import *
 
+def make_folder(in_path):
+    if not os.path.isdir(in_path):
+        os.mkdir(in_path)
+    
+def make_folders_multi(*in_list):
+    for in_path in in_list:
+        make_folder(in_path)
+
 def remove_items(lst, value):
     return [item for item in lst if item != value]
 
