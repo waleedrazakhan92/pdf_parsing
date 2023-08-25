@@ -167,13 +167,8 @@ def process_and_save(all_pages,junk_folder=None,display_info=False,st_i=None,end
     return all_final_names,all_final_appends,corrupts
 
 
-def process_all_documents(path_write_all,all_documents):
-    display_info=False
-    save_junk = True
-    save_images = True
-    save_zips = True
-    op_orientation = True
-
+def process_all_documents(path_write_all,all_documents,save_junk=False,save_images=False,save_zips=False,op_orientation=True,display_info=False):
+    
     if save_zips==True:     assert save_images==True
 
     make_folder(path_write_all)
