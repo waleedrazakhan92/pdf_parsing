@@ -168,7 +168,6 @@ def process_and_save(all_pages,junk_folder=None,display_info=False,st_i=None,end
 
 
 def process_all_documents(path_write_all,all_documents,save_junk=False,save_images=False,save_zips=False,op_orientation=True,display_info=False):
-    
     if save_zips==True:     assert save_images==True
 
     make_folder(path_write_all)
@@ -212,7 +211,7 @@ def process_all_documents(path_write_all,all_documents,save_junk=False,save_imag
 
         all_final_names,all_final_appends,corrupts = process_and_save(all_pages,junk_folder,display_info=display_info,
                                                                       st_i=st_i,end_i=end_i,save_jpegs=save_junk,op_orientation=op_orientation)
-        all_corrupts.append(all_corrupts)
+        all_corrupts.append(corrupts)
 
         all_files_pagewise = make_pagewise_list(all_final_names,all_final_appends)
         break_pdf_to_files(pdf_path,pdf_folder,all_files_pagewise,compress_pdf=True)
