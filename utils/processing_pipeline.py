@@ -167,7 +167,7 @@ def process_and_save(all_pages,junk_folder=None,display_info=False,st_i=None,end
     return all_final_names,all_final_appends,corrupts
 
 
-def process_all_documents(path_write_all,all_documents,save_junk=False,save_images=False,save_zips=False,op_orientation=True,display_info=False):
+def process_all_documents(path_write_all,all_documents,save_junk=False,save_images=False,save_zips=False,op_orientation=True,display_info=False,pg_num=True,compress_pdf=True):
     if save_zips==True:     assert save_images==True
 
     make_folder(path_write_all)
@@ -214,10 +214,10 @@ def process_all_documents(path_write_all,all_documents,save_junk=False,save_imag
         all_corrupts.append(corrupts)
 
         all_files_pagewise = make_pagewise_list(all_final_names,all_final_appends)
-        break_pdf_to_files(pdf_path,pdf_folder,all_files_pagewise,compress_pdf=True)
+        break_pdf_to_files(pdf_path,pdf_folder,all_files_pagewise,compress_pdf=compress_pdf,pg_num=pg_num)
 
         selected_pages = all_pages[st_i:end_i]
-        if save_images==True:   break_pdf_to_images(selected_pages,images_folder,all_files_pagewise,jpeg_quality=10)
+        if save_images==True:   break_pdf_to_images(selected_pages,images_folder,all_files_pagewise,jpeg_quality=10,pg_num=pg_num)
 
         zip_name = os.path.join(path_write_zips,pdf_name+'.zip')
         if save_zips==True:     shutil.make_archive(zip_name.split('.zip')[0], 'zip', images_folder)

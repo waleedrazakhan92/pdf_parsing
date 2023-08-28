@@ -43,10 +43,13 @@ def upload_file():
         save_zips = False
         display_info=False
         op_orientation = True
-
+        pg_num = False
+        compress_pdf = False
+        
         path_write_all = 'downloads/processed_pdfs_flask/'
         if os.path.isdir(path_write_all):  shutil.rmtree(path_write_all)
-        process_all_documents(path_write_all,all_documents,save_junk=save_junk,save_images=save_images,save_zips=save_zips,op_orientation=op_orientation,display_info=display_info)
+        process_all_documents(path_write_all,all_documents,save_junk=save_junk,save_images=save_images,save_zips=save_zips,
+        op_orientation=op_orientation,display_info=display_info,pg_num=pg_num,compress_pdf=compress_pdf)
 
         # Provide link to download the generated zip file
         zip_url = f'downloads/all_zips.zip'  # You'll define this route later
