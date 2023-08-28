@@ -24,6 +24,7 @@ from utils.non_table_utils import erode_and_find_contours
 from utils.formatting_utils import *
 from utils.notice_and_case_types import *
 from utils.common_functions import *
+from utils.barcode_utils import *
 
 def process_and_save(all_pages,junk_folder=None,display_info=False,st_i=None,end_i=None,save_jpegs=False,op_orientation=True):
     if save_jpegs==True:
