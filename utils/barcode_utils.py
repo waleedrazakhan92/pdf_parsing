@@ -24,11 +24,19 @@ def get_name_from_bcode(bcode_417,limit_name_idx=None):
             bcode_name.append(bcode_text[i][1:])
 
     
-    ## limiting name to just 'g' and 'h' 
-    if bcode_name!=[] and limit_name_idx!=None:
-        bcode_name = bcode_name[:limit_name_idx]
+    # ## limiting name to just 'g' and 'h' 
+    # if bcode_name!=[] and limit_name_idx!=None:
+    #     bcode_name = bcode_name[:limit_name_idx]
 
-    if bcode_name!=[]:
-        bcode_name = str(' '.join(bcode_name))
+    final_bcode_name = []
+    if len(bcode_name)==1:
+        final_bcode_name = bcode_name
+    elif len(bcode_name)>1:
+        final_bcode_name.append(bcode_name[1]+',')
+        final_bcode_name.append(bcode_name[0])
 
-    return bcode_name
+
+    if final_bcode_name!=[]:
+        final_bcode_name = str(' '.join(final_bcode_name))
+
+    return final_bcode_name
